@@ -1,0 +1,1 @@
+Hello, This Text Adventure game was made by Victor059. Have fun playing.
