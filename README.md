@@ -11,9 +11,14 @@ If you decided to download the release-(version)-Textia.zip file, once you<br> e
 ### How to play
 If you ever want to get use to the game and how it works you could read the guide in our wiki page.
 
+### Program Info
+This was coded in [CodeBlocks IDE](https://www.codeblocks.org) and compiled using mingw 64bit version.
+
 <br>
 +---------------------------------------------------------------------------------------------------+
 <br>
 Contributors:<br>
-- _Victor0596647_<br>
+> <strong><a href = "https://github.com/Victor0596647/" >Victor0596647</a></strong><br>
+<br>
+
 Development Started in 2020.
