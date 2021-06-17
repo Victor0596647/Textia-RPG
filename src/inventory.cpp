@@ -8,6 +8,7 @@
 #include "inventory.h"
 
 string inv[21];
+extern string playerName;
 
 void inventory::inventorySystem()
 {
@@ -34,15 +35,14 @@ void inventory::inventorySystem()
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,7);
     cout << "+---------------------------------------------------+ \n" << endl;
-    cout << "        Your Inventory list" << endl << endl;
+    cout << "        " << playerName << "'s Inventory list" << endl << endl;
     cout << "+-------------------------------------------------------------------+ \n" << endl;
-    for(int i = 0; i < 16; x < 5){
+    for(int i = 1; i < 16; x < 5){
         SetConsoleTextAttribute(h,10);
         cout << "   [" << i++ << "] " << flush;
         SetConsoleTextAttribute(h,9);
         cout << inv[x++] << endl;
         SetConsoleTextAttribute(h,10);
-
     }
     SetConsoleTextAttribute(h,7);
     cout << endl << "+-------------------------------------------------------------------+ \n" << endl;

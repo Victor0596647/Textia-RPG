@@ -1,6 +1,7 @@
 #ifndef TXTIASRC_H
 #define TXTIASRC_H
 #include <iostream>
+#include "txtiaGame.h"
 #include <Windows.h>
 #include <fstream>
 #include <conio.h>
@@ -21,25 +22,22 @@ class txtiaSrc
         void changeOpt();
         void WaitKey();
         void inputNumCout();
-        void inputText(string text);
         void errorMessage();
         void settings();
         void quit();
 
-
     private:
         //Variables For The User
-        string playerName;
+        string protoText;
+        /*
         string playerGender;
         string playerHe_She;
         string playerHim_Her;
         string playerHis_Hers;
-        int playerArmor;
-        int playerHP = 100;
-        int playerCash = 0;
-        double playerLvl = 0;
+        */
+        const bool storyComplet = true;
         //Input
-        int inputNum;
+        /*string inputNum;*/
         ofstream newSave;
         ifstream oldSave;
 
