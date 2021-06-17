@@ -1,5 +1,5 @@
 # Textia-RPG
-+---------------------------------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------+
 ### Intro
 Console Text-based RPG game inspired from "Sanctuary RPG: Black Edition".<br>
 
@@ -12,7 +12,7 @@ If you decided to download the release-(version)-Textia.zip file, once you<br> e
 If you ever want to get use to the game and how it works you could read the guide in our wiki page.
 
 <br>
-+---------------------------------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------+
 <br>
 Contributors:<br>
 - _Victor0596647_<br>
