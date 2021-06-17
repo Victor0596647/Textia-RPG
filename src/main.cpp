@@ -1,11 +1,15 @@
 #include <iostream>
+#include <fstream>
 #include "txtiaSrc.h"
 
 using namespace std;
 
+txtiaSrc Game;
+
 int main()
 {
-    txtiaSrc newGame;
-};
+    //Creates a new game
+    Game.startProg();
+}
 
 

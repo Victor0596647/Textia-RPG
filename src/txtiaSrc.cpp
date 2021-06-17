@@ -1,13 +1,17 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include <fstream>
 #include <string>
 #include <stdlib.h>
 #include "txtiaSrc.h"
+#include "inventory.h"
 
 using namespace std;
 
-txtiaSrc::txtiaSrc()
+
+
+void txtiaSrc::startProg()
 {
     //Title Screen
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -27,15 +31,72 @@ txtiaSrc::txtiaSrc()
     cout << " Press Any Key To Continue..." << endl;
     WaitKey();
     system("CLS");
+    newOrOld();
+}
 
+void txtiaSrc::newOrOld(){
+    cout << "+-----------------------------------------------------------------+ \n" << endl;
+    cout << "  Hello are you a new player or a continuing player? \n" << endl;
+    cout << "   [1] New" << endl;
+    cout << "   [2] Continuing \n" << endl;
+    cout << "+-----------------------------------------------------------------+" << endl;
+
+    do{
+        inputNumCout();
+
+        if(inputNum == 1){
+            infoSection();
+            break;
+        }else if(inputNum == 2){
+            oldPlayer();
+            break;
+        }else{
+            errorMessage();
+        }
+    }while(true);
+}
+
+void txtiaSrc::oldPlayer(){
+    oldSave.open("txtiaSrcSave.dat");
+    if(!oldSave){
+        cout << "+---------------------------------------------------------------------+ \n" << endl;
+        cout << "   Error with opening file. The file probably does not exist. \n" << endl;
+        cout << "+---------------------------------------------------------------------+" << endl;
+        WaitKey();
+        system("CLS");
+        newOrOld();
+    }else if (oldSave){
+        getline(oldSave, playerName);
+        while( oldSave >> playerGender >> playerHe_She >> playerHim_Her >> playerHis_Hers){
+            cout << "+-----------------------------------------------------------------+ \n" << endl;
+            cout << "   Your name is " << playerName << endl;
+            cout << "   Your Gender is " << playerGender << endl;
+            cout << "   Characters will refer you to as " << playerHe_She << ", " << playerHim_Her << ", and " << playerHis_Hers << endl << endl;
+            cout << "+-----------------------------------------------------------------+ \n" << endl;
+            WaitKey();
+            system("CLS");
+            mainMenu();
+        }
+    }
+    oldSave.close();
+}
+
+void txtiaSrc::infoSection(){
+
+    newSave.open("txtiaSrcSave.dat");
+
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     //Info Section
     cout << "+----------------------------------------------+" << endl;
     cout << endl << "  Hello fellow player, please enter your name." << endl << endl;
     cout << "+----------------------------------------------+" << endl;
-    cout << " > ";
+    SetConsoleTextAttribute(h, 10);
+    cout << " > " << flush;
+    cin.ignore();
     getline(cin, playerName);
+    SetConsoleTextAttribute(h, 11);
     cout << "+----------------------------------------------------------------------------+" << endl;
-    cout << endl << "  Hello " << playerName << ", what is your gender? (Note: If you enter a letter the program will crash)" << endl << endl;
+    cout << endl << " Hello " << playerName << ", what is your gender? (Note: If you enter a letter the program will crash)" << endl << endl;
     cout << endl << " [1] Boy" << endl;
     cout << endl << " [2] Girl" << endl << endl;
     cout << "+----------------------------------------------------------------------------+" << endl;
@@ -50,6 +111,8 @@ txtiaSrc::txtiaSrc()
             playerHe_She = "He";
             playerHim_Her = "Him";
             playerHis_Hers = "His";
+
+            newSave << playerName << endl << playerGender << endl << playerHe_She << endl << playerHim_Her << endl << playerHis_Hers << endl;
 
             cout << "+-----------------------------------------------------------+" << endl;
             cout << endl << "  We will now clear the console to open the game menu. Please enter any key" << endl << endl;
@@ -66,6 +129,8 @@ txtiaSrc::txtiaSrc()
             playerHim_Her = "Her";
             playerHis_Hers = "Hers";
 
+            newSave << playerName << endl << playerGender << endl << playerHe_She << endl << playerHim_Her << endl << playerHis_Hers << endl;
+
             cout << "+-----------------------------------------------------------+" << endl;
             cout << endl << "  We will now clear the console to open the game menu. Please enter any key" << endl << endl;
             cout << "+-----------------------------------------------------------+" << endl;
@@ -80,6 +145,7 @@ txtiaSrc::txtiaSrc()
         }
     }
     while(true);
+    newSave.close();
 }
 
 void txtiaSrc::WaitKey()
@@ -112,12 +178,11 @@ void txtiaSrc::inputNumCout()
     SetConsoleTextAttribute(h, 11);
 };
 
-txtiaSrc::play()
+
+void txtiaSrc::play()
 {
-    cout << "+-------------------------------------------------------------------------------------------------------------------+ \n" << endl;
-    cout << "       Hello, Sorry for the inconvience this option won't work since we haven't developed the story." << endl;
-    cout << "       We will revert you back. Press a Key. \n" << endl;
-    cout << "+-------------------------------------------------------------------------------------------------------------------+" << endl;
+    inventory playtest;
+    playtest.inventorySystem();
     WaitKey();
     system("CLS");
     mainMenu();
@@ -143,7 +208,7 @@ void txtiaSrc::settings()
             cout << "   Your name is " << playerName << endl;
             cout << "   Your Gender is " << playerGender << endl;
             cout << "   Characters will refer you to as " << playerHe_She << ", " << playerHim_Her << ", and " << playerHis_Hers << endl << endl;
-            cout << "   [0] > Back \n" << endl;
+            cout << "   [0] Back \n" << endl;
             cout << "+-----------------------------------------------------------------+ \n" << endl;
 
             do
@@ -182,8 +247,11 @@ void txtiaSrc::settings()
     while(true);
 }
 
-txtiaSrc::changeOpt()
+void txtiaSrc::changeOpt()
 {
+    newSave.open("txtiaSrcSave.dat", ofstream::out | ofstream::trunc);
+
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     cout << endl << "+-------------------------------------------+" << endl << endl;
     cout << "   What would you like to change? \n" << endl;
     cout << "   [1] > Name \n";
@@ -200,15 +268,20 @@ txtiaSrc::changeOpt()
             cout << "+-------------------------------+" << endl << endl;
             cout << "   Enter in a new name. \n" << endl;
             cout << "+-------------------------------+" << endl << endl;
-            cout << "> ";
-            cin >> playerName;
+            SetConsoleTextAttribute(h, 10);
+            cout << " > " << flush;
+            cin.ignore();
+            getline(cin, playerName);
+            SetConsoleTextAttribute(h, 11);
             cout << "+---------------------------------------------------------------+" << endl << endl;
             cout << "   Your new name is " << playerName << endl;
             cout << "   Press any key so we can revert you back to the settings. \n" << endl;
             cout << "+---------------------------------------------------------------+" << endl;
+            newSave << playerName << endl << playerGender << endl << playerHe_She << endl << playerHim_Her << endl << playerHis_Hers << endl;
             WaitKey();
             system("CLS");
             settings();
+            newSave.close();
             break;
         }
         else if(inputNum == 2)
@@ -230,10 +303,15 @@ txtiaSrc::changeOpt()
                     playerHim_Her = "Him";
                     playerHis_Hers = "His";
 
-                    cout << "Your gender is now a "<< playerGender << "." << endl;
-                    cout << "We will now revert you back to settings, Press any key to continue..." << endl;
+                    newSave << playerName << endl << playerGender << endl << playerHe_She << endl << playerHim_Her << endl << playerHis_Hers << endl;
+
+                    cout << "+-----------------------------------------------------------------------------------------------+ \n" << endl;
+                    cout << "   Your gender is now a "<< playerGender << "." << endl;
+                    cout << "   We will now revert you back to settings, Press any key to continue... \n" << endl;
+                    cout << "+-----------------------------------------------------------------------------------------------+" << endl;
                     WaitKey();
                     system("CLS");
+                    newSave.close();
                     settings();
                     break;
                 }
@@ -244,11 +322,16 @@ txtiaSrc::changeOpt()
                     playerHim_Her = "Her";
                     playerHis_Hers = "Hers";
 
-                    cout << "Your gender is now a "<< playerGender << "." << endl;
-                    cout << "We will now revert you back to settings, Press any key to continue..." << endl;
+                    newSave << playerName << endl << playerGender << endl << playerHe_She << endl << playerHim_Her << endl << playerHis_Hers << endl;
+
+                    cout << "+-----------------------------------------------------------------------------------------------+ \n" << endl;
+                    cout << "   Your gender is now a "<< playerGender << "." << endl;
+                    cout << "   We will now revert you back to settings, Press any key to continue... \n" << endl;
+                    cout << "+-----------------------------------------------------------------------------------------------+" << endl;
                     WaitKey();
                     system("CLS");
-                    mainMenu();
+                    newSave.close();
+                    settings();
                     break;
                 }
                 else if(inputNum == 0)
@@ -306,8 +389,9 @@ void txtiaSrc::quit()
     }
     while(true);
 }
-txtiaSrc::mainMenu()
+void txtiaSrc::mainMenu()
 {
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     //Welcome Message.
     cout << "+---------------------------+" << endl;
     cout << endl << "    Welcome To Textia RPG" << endl << endl;
@@ -318,7 +402,10 @@ txtiaSrc::mainMenu()
     cout << "  [1] > PLAY" << endl << endl;
     cout << "  [2] > SETTINGS" << endl << endl;
     cout << "  [3] > QUIT" << endl << endl;
-    cout << "Version : 0.10 \n";
+    cout << "Version : "<< flush;
+    SetConsoleTextAttribute(h, 25);
+    cout << "0.13\n";
+    SetConsoleTextAttribute(h, 11);
     cout << "+------------------------------------------------+" << endl << endl;
 
     do
