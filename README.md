@@ -14,4 +14,6 @@ If you ever want to get use to the game and how it works you could read the guid
 <br>
 +---------------------------------------------------------------------------------------------------------------------------------------+
 <br>
+Contributors:<br>
+- _Victor0596647_<br>
 Development Started in 2020.
