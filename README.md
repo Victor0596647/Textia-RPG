@@ -1,4 +1,4 @@
-# Textia-RPG(Discountinued)
+# Textia-RPG
 +---------------------------------------------------------------------------------------------------+
 ### Intro
 Console Text-based RPG game inspired from "Sanctuary RPG: Black Edition".<br>
